@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Welcome from './welcome';
 
 var config = {
   apiKey: "AIzaSyAnY0sZu5MdoXZq44UIAMUPXzEFdVlohpw",
@@ -12,72 +13,110 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends React.Component {
-
-    render() {
-      return (
-        <div>
-          <Welcome />
-        </div>
-      )
-    }
-}
-
-class Welcome extends React.Component {
-  constructor() {
+  constructor(){
     super();
     this.state = {
       userName: "",
       plantName: "",
-      points: 50
+      points: 50,
+      key: ''
     }
     this.addUser = this.addUser.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-   
   }
   componentDidMount() {
-    const usersRef = firebase.database().ref();
+    // const dbRef = firebase.database().ref();
 
+    // dbRef.on("value", (firebaseData) => {
+    //   const usersArray = [];
+    //   const usersData = firebaseData.val();
+
+    //   for (let userKey in usersData) {
+    //     usersData[userKey].key = userKey
+    //     usersArray.push(usersData[userKey])
+    //   }
+    //   this.setState({
+    //     key: usersArray
+    //   })
+    // });
   }
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  }
- 
-  addUser(e) {
-    e.preventDefault();
+  addUser(user) {
+
     const usersItem = {
-      userName: this.state.userName,
-      plantName: this.state.plantName,
-      dateClicked: Date.now(),
-      points: 50
+      userName: user.userName,
+      plantName: user.plantName,
+      points: 50,
+      dateClickedStart: Date.now(),
+      dateWatered: 0
     }
-   console.log(usersItem);
+    // console.log(usersItem);
     const dbRef = firebase.database().ref();
-    dbRef.push(usersItem);
+    
+    const userKey= dbRef.push(usersItem).getKey();
+    console.log(userKey);
+  
+
+
     this.setState({
       userName: "",
-      plantName: ""
+      plantName: "",
+      key: userKey
+      // userName: user.userName,
+      // plantName: user.plantName
     });
+    
+    }
+
+  
+  
+  render() {
+      return (
+        <div>
+          <Welcome submitForm={this.addUser}/>
+          <PlantPage userPoints={this.state.points} userKey={this.state.key}/>
+        </div>
+      )
+    }
   }
 
-  render() {
 
-    return (
+class PlantPage extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      points: 50,
+      key: ''
+    }
+    this.changePoints = this.changePoints.bind(this);
+  }
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+    this.setState({
+      points: nextProps.userPoints,
+      key: nextProps.userKey
+    })
 
-      <form onSubmit={this.addUser}>
-        <h1>Welcome to Virtual Plant!</h1>
+  }
+  changePoints(){
+  
+    this.setState({
+      points: this.state.points + 10
+    });
+    const dbRef = firebase.database().ref(this.state.key);
+    dbRef.update({ points: this.state.points + 10 })
 
-        <label htmlFor="userName">Enter your name:</label>
-        <input type="text" onChange={this.handleChange} value={this.state.userName} name="userName" />
+    const dbWater = firebase.database().ref(this.state.key);
+    dbWater.update({ dateWatered: Date.now() })
 
-        <label htmlFor="plantName">Choose your plant's name:</label>
-        <input type="text" onChange={this.handleChange} value={this.state.plantName} name="plantName" />
+  }
 
-        <button type="submit">START</button>
-      </form>
-
-        )
+  render(){
+    return(
+      <section>
+        <img src="public/images/plantPlaceholder5.png" alt="placeholder image"/>
+        <button onClick={this.changePoints}>WATER ME!</button>
+        <p>Points:{this.state.points}</p>
+      </section>
+    )
   }
 }
 
