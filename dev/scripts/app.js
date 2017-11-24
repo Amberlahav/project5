@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Welcome from './welcome';
+import PlantPage from './plantPage.js';
 
 var config = {
   apiKey: "AIzaSyAnY0sZu5MdoXZq44UIAMUPXzEFdVlohpw",
@@ -20,9 +21,12 @@ class App extends React.Component {
       userName: "",
       plantName: "",
       points: 50,
+      dateWatered: 0,
+      dateClickedStart: 0,
       key: ''
     }
     this.addUser = this.addUser.bind(this);
+    this.startReturningUser = this.startReturningUser.bind(this);
   }
   componentDidMount() {
     const dbRef = firebase.database().ref();
@@ -40,8 +44,6 @@ class App extends React.Component {
       // let users select their plant
       // based on that, pull up their plant's data and use it for the conditional statements
     })
-
-    
     
   }
   addUser(user) {
@@ -57,6 +59,7 @@ class App extends React.Component {
     const dbRef = firebase.database().ref();
     // console.trace(usersItem)
     const userKey = dbRef.push(usersItem).getKey();
+    console.log(userKey);
     
     this.setState({
       userName: "",
@@ -65,7 +68,15 @@ class App extends React.Component {
       // userName: user.userName,
       // plantName: user.plantName
     });
-    
+  }
+
+  startReturningUser(e) {
+    this.setState({
+      key: e.target.id,
+    })
+    const dbRef = firebase.database().ref(e.target.id);
+    dbRef.update({ dateClickedStart: Date.now() })
+      console.log(e.target.id)
   }
 
   render() {
@@ -73,17 +84,16 @@ class App extends React.Component {
       return (
         <div>
           <Welcome submitForm={this.addUser}/>
-          
-          {this.state.key ?
-          <PlantPage userPoints={this.state.points} userKey={this.state.key}/>
-            : 
-            <ul>
-              <h2>Returning User? Select your plant:</h2>
-            {Object.keys(this.state.plantList).map((plant) => {
-                return <PlantList plantInfo={plantObject[plant]} />;
+          <ul>
+            <h2>Returning User? Select your plant:</h2>
+              {Object.keys(this.state.plantList).map((plant) => {
+                return <PlantList plantkey={plant} startReturningUser={this.startReturningUser}plantInfo={plantObject[plant]} />;
               })
             }
           </ul>
+          {this.state.key ?
+          <PlantPage userPoints={this.state.points} userKey={this.state.key}/>
+            : null
           // instead of null, show list of plants (create new component)
           }
         </div>
@@ -94,84 +104,16 @@ class App extends React.Component {
 class PlantList extends React.Component {
     render(){
       let userPlant = this.props.plantInfo
-      console.log(userPlant)
+      // console.log(userPlant)
       return (
         <li>
-          <button>{userPlant.plantName}</button>
+          <button onClick={this.props.startReturningUser} id={this.props.plantkey}>{userPlant.plantName}</button>
         </li>
       )
     }
   }
 
-class PlantPage extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      points: 50,
-      dateWatered: 0,
-      dateClickedStart:0,
-      key: ''
-    }
-    this.changePoints = this.changePoints.bind(this);
-  }
-  // componentWillReceiveProps(nextProps){
-  //   // console.log(nextProps);
-  //   this.setState({
-  //     points: nextProps.userPoints,
-  //     key: nextProps.userKey
-  //   })
+ 
 
-  // }
-  componentDidMount(){
-
-    const dbRef = firebase.database().ref(this.props.userKey);
-    
-
-    // const lastWatered = dbRef.snapshot.val();
-    dbRef.on("value", (snapshot) => {
-      let dateWatered = (snapshot.val().dateWatered);
-      let dateClickedStart = (snapshot.val().dateClickedStart);
-      let points = (snapshot.val().points);
-
-      this.setState({
-        dateWatered: dateWatered,
-        dateClickedStart: dateClickedStart,
-        points
-
-      })
-    })
-  };
-  changePoints(){
-
-    const dbRef = firebase.database().ref(this.props.userKey);
-    
-    const timeDifference = Date.now() - this.state.dateClickedStart
-    console.log(timeDifference);
-    if(timeDifference > 10000) {
-      dbRef.update({ points: this.state.points + 10 })
-    } else {
-      dbRef.update({ points: this.state.points - 10 })
-    }
-   
-    // dbRef.update({ points: this.state.points + 10 })
-    dbRef.update({ dateWatered: Date.now() })
-   
-  
-          // if user clicks water me again before 10 seconds have passed, 
-    // decrease points by 10
-
-
-  }
-
-  render(){
-    return(
-      <section>
-        <img src="public/images/plantPlaceholder5.png" alt="placeholder image"/>
-        <button onClick={this.changePoints}>WATER ME!</button>
-        <p>Points:{this.state.points}</p>
-      </section>
-    )
-  }
-}
 
 ReactDOM.render(<App />, document.getElementById('app'));
