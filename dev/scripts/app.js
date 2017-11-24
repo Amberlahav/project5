@@ -16,6 +16,7 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
+      plantList:{},
       userName: "",
       plantName: "",
       points: 50,
@@ -25,9 +26,22 @@ class App extends React.Component {
   }
   componentDidMount() {
     const dbRef = firebase.database().ref();
+    
     dbRef.on("value", (snapshot) => {
-      console.log(snapshot.val());
+      let plantList = Object.assign(snapshot.val());
+      console.log(plantList)
+      this.setState({
+        plantList
+      })
+
+      // turn into an array
+      // store it inside the state
+      // pass it down to the plantList component as a prop
+      // let users select their plant
+      // based on that, pull up their plant's data and use it for the conditional statements
     })
+
+    
     
   }
   addUser(user) {
@@ -42,11 +56,8 @@ class App extends React.Component {
     // console.log(usersItem);
     const dbRef = firebase.database().ref();
     // console.trace(usersItem)
-    
     const userKey = dbRef.push(usersItem).getKey();
     
-  
-
     this.setState({
       userName: "",
       plantName: "",
@@ -55,16 +66,24 @@ class App extends React.Component {
       // plantName: user.plantName
     });
     
-    }
+  }
 
-  
   render() {
+    const plantObject = this.state.plantList
       return (
         <div>
           <Welcome submitForm={this.addUser}/>
+          
           {this.state.key ?
           <PlantPage userPoints={this.state.points} userKey={this.state.key}/>
-          : null
+            : 
+            <ul>
+              <h2>Returning User? Select your plant:</h2>
+            {Object.keys(this.state.plantList).map((plant) => {
+                return <PlantList plantInfo={plantObject[plant]} />;
+              })
+            }
+          </ul>
           // instead of null, show list of plants (create new component)
           }
         </div>
@@ -72,8 +91,16 @@ class App extends React.Component {
     }
   }
 
-class plantList extends React.Component {
-
+class PlantList extends React.Component {
+    render(){
+      let userPlant = this.props.plantInfo
+      console.log(userPlant)
+      return (
+        <li>
+          <button>{userPlant.plantName}</button>
+        </li>
+      )
+    }
   }
 
 class PlantPage extends React.Component {
@@ -87,14 +114,14 @@ class PlantPage extends React.Component {
     }
     this.changePoints = this.changePoints.bind(this);
   }
-  componentWillReceiveProps(nextProps){
-    // console.log(nextProps);
-    this.setState({
-      points: nextProps.userPoints,
-      key: nextProps.userKey
-    })
+  // componentWillReceiveProps(nextProps){
+  //   // console.log(nextProps);
+  //   this.setState({
+  //     points: nextProps.userPoints,
+  //     key: nextProps.userKey
+  //   })
 
-  }
+  // }
   componentDidMount(){
 
     const dbRef = firebase.database().ref(this.props.userKey);
@@ -104,16 +131,13 @@ class PlantPage extends React.Component {
     dbRef.on("value", (snapshot) => {
       let dateWatered = (snapshot.val().dateWatered);
       let dateClickedStart = (snapshot.val().dateClickedStart);
-      // conditional statements:
-      // if(dateWatered > dateClickedStart + 10000){
-      //     points: this.state.points - 10
-      // }
-      console.log(this.setState);
+      let points = (snapshot.val().points);
+
       this.setState({
         dateWatered: dateWatered,
         dateClickedStart: dateClickedStart,
-        points: snapshot.val().points 
-        // console.log(lastWatered)
+        points
+
       })
     })
   };
@@ -122,13 +146,13 @@ class PlantPage extends React.Component {
     const dbRef = firebase.database().ref(this.props.userKey);
     
     const timeDifference = Date.now() - this.state.dateClickedStart
-   console.log(timeDifference);
+    console.log(timeDifference);
     if(timeDifference > 10000) {
-      dbRef.update({ points: this.state.points - 10 })
-    } else {
       dbRef.update({ points: this.state.points + 10 })
+    } else {
+      dbRef.update({ points: this.state.points - 10 })
     }
-
+   
     // dbRef.update({ points: this.state.points + 10 })
     dbRef.update({ dateWatered: Date.now() })
    
