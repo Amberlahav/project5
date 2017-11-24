@@ -76,7 +76,12 @@ class App extends React.Component {
     })
     const dbRef = firebase.database().ref(e.target.id);
     dbRef.update({ dateClickedStart: Date.now() })
-      console.log(e.target.id)
+
+  
+
+      // if (timeDifferenceLastWatered > 10000) {
+      //       dbRef.update({ points: this.state.points - 10 })
+      //   } 
   }
 
   render() {
