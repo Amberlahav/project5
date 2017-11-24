@@ -37,10 +37,10 @@ class PlantPage extends React.Component {
                 const timeDifferenceLastWatered = dateClickedStart - dateWatered
 
                 firstLoaded = false
-                // if (timeDifferenceLastWatered > 10000) {
-                    // amountToDecrease = 10;
+                if (timeDifferenceLastWatered > 10000) {
+                    amountToDecrease = 10;
                     // dbRef.update({ points: this.state.points - 10 })
-                // } 
+                } 
                 if (timeDifferenceLastWatered > 20000) {
                     amountToDecrease = 20;
                 }
@@ -104,15 +104,29 @@ class PlantPage extends React.Component {
 
     }
     render() {
-        return (
-            <section>
-                <img src="public/images/plantPlaceholder5.png" alt="placeholder image" />
-                {/* <PlantImage /> */}
-                
-                
+        
+        let show = null;
+        if (this.state.points <= 0){
+            show = <p>You lose!!</p>
+        } else if (this.state.points > 100) {
+            show = <p>You win!!</p>
+        } else {
+            show = (
+                <div>
                     <button onClick={this.changePoints}>WATER ME!</button>
                     <p>Points:{this.state.points}</p>
-                
+                </div>
+            )
+        }
+
+       
+
+        return (
+            <section>
+                {/* <h3>Hello, {this.state.userName}, {this.state.plantName} is excited to see you!</h3> */}
+            <img src="public/images/plantPlaceholder5.png" alt="placeholder image" />
+                {/* <PlantImage /> */}
+            {show}
             </section>
         )
     }
