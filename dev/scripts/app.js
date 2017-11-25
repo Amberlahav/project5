@@ -82,12 +82,15 @@ class App extends React.Component {
     
     dbRef.on("value", (snapshot) => {
       let plantName = (snapshot.val().plantName);
-      let userName = (snapshot.val().userName)
+      let userName = (snapshot.val().userName);
+      let points = (snapshot.val().points);
       // console.log(plantName)
 
       this.setState({
         plantName,
-        userName
+        userName,
+        points
+
       })
     })
       // if (timeDifferenceLastWatered > 10000) {
