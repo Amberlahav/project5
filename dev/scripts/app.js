@@ -33,7 +33,7 @@ class App extends React.Component {
     
     dbRef.on("value", (snapshot) => {
       let plantList = Object.assign(snapshot.val());
-      console.log(plantList)
+      // console.log(plantList)
       this.setState({
         plantList
       })
@@ -59,7 +59,7 @@ class App extends React.Component {
     const dbRef = firebase.database().ref();
     // console.trace(usersItem)
     const userKey = dbRef.push(usersItem).getKey();
-    console.log(userKey);
+    // console.log(userKey);
     
     this.setState({
       userName: "",
@@ -68,6 +68,7 @@ class App extends React.Component {
       // userName: user.userName,
       // plantName: user.plantName
     });
+   
   }
 
   startReturningUser(e) {
@@ -77,7 +78,17 @@ class App extends React.Component {
     })
     const dbRef = firebase.database().ref(e.target.id);
     dbRef.update({ dateClickedStart: Date.now() })
+    
+    dbRef.on("value", (snapshot) => {
+      let plantName = (snapshot.val().plantName);
+      let userName = (snapshot.val().userName)
+      // console.log(plantName)
 
+      this.setState({
+        plantName,
+        userName
+      })
+    })
       // if (timeDifferenceLastWatered > 10000) {
       //       dbRef.update({ points: this.state.points - 10 })
       //   } 
@@ -87,17 +98,21 @@ class App extends React.Component {
     const plantObject = this.state.plantList
       return (
         <div>
-          <Welcome submitForm={this.addUser}/>
-          <ul>
-            <h2>Returning User? Select your plant:</h2>
-              {Object.keys(this.state.plantList).map((plant) => {
-                return <PlantList plantkey={plant} startReturningUser={this.startReturningUser}plantInfo={plantObject[plant]} />;
-              })
-            }
-          </ul>
+          <Welcome submitForm={this.addUser} />
           {this.state.key ?
-            <PlantPage userPoints={this.state.points} userKey={this.state.key} plantName={this.state.plantName} userName={this.state.userName}/>
-            : null
+            <div>
+              {this.state.userName && this.state.plantName ?
+              <h3>Welcome back {`${this.state.userName}`}! {`${this.state.plantName}`} is excited to see you!</h3>
+                : <h3>your plant is ready to be watered!</h3>}
+              <PlantPage userPoints={this.state.points} userKey={this.state.key} />
+            </div>
+            : <ul>
+              <h2>Returning User? Select your plant:</h2>
+              {Object.keys(this.state.plantList).map((plant) => {
+                return <PlantList plantkey={plant} startReturningUser={this.startReturningUser} plantInfo={plantObject[plant]} />;
+              })
+              }
+            </ul>
           // instead of null, show list of plants (create new component)
           }
         </div>
@@ -116,8 +131,6 @@ class PlantList extends React.Component {
       )
     }
   }
-
- 
 
 
 ReactDOM.render(<App />, document.getElementById('app'));

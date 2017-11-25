@@ -24,6 +24,7 @@ class PlantPage extends React.Component {
       })
 
     }
+
     componentDidMount() {
 
         const dbRef = firebase.database().ref(this.props.userKey);
@@ -145,11 +146,9 @@ class PlantPage extends React.Component {
             showImage = <img src="public/images/plantPlaceholder0.png" alt="placeholder image" />
         }
 
-        console.log(this.state.userName + "blah")
-
         return (
             <section>
-            <h3>Hello, {`${this.state.userName}`}, {`${this.state.plantName}`} is excited to see you!</h3>
+
             {showImage}
             {show}
             
