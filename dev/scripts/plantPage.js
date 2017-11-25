@@ -2,6 +2,7 @@ import React from 'react';
 
 
 let firstLoaded = true;
+// let firstWatered;
 class PlantPage extends React.Component {
     constructor(props) {
         super(props)
@@ -11,10 +12,11 @@ class PlantPage extends React.Component {
             points: 50,
             dateWatered: 0,
             dateClickedStart: 0,
+            firstWatered: null,
             key: ''
         }
         this.changePoints = this.changePoints.bind(this);
-        this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+        this.componentWillReceiveProps.bind(this);
     }
     componentWillReceiveProps(nextProps){
     //   console.log(nextProps);
@@ -33,53 +35,56 @@ class PlantPage extends React.Component {
             let dateWatered = (snapshot.val().dateWatered);
             let dateClickedStart = (snapshot.val().dateClickedStart);
             let points = (snapshot.val().points);
-
+            console.log("ccurreent: "+points);
+            let firstWatered = (snapshot.val().firstWatered);
+            console.log(firstWatered)
             let amountToDecrease = 0;
+
             if (firstLoaded){
-                // do the calculation
+           
                 const timeDifferenceLastWatered = dateClickedStart - dateWatered
 
-                firstLoaded = false
+                firstLoaded= false;
+                
                 if (timeDifferenceLastWatered > 10000) {
                     amountToDecrease = 10;
-                    // dbRef.update({ points: this.state.points - 10 })
-                } 
-                if (timeDifferenceLastWatered > 20000) {
+                }
+                else if (timeDifferenceLastWatered > 20000) {
                     amountToDecrease = 20;
                 }
-                if (timeDifferenceLastWatered > 30000) {
+                else if (timeDifferenceLastWatered > 30000) {
                     amountToDecrease = 30;
                 }
-                if (timeDifferenceLastWatered > 40000) {
+                else if (timeDifferenceLastWatered > 40000) {
                     amountToDecrease = 40;
                 }
-                if (timeDifferenceLastWatered > 50000) {
+                else if (timeDifferenceLastWatered > 50000) {
                     amountToDecrease = 50;
                 }
-                if (timeDifferenceLastWatered > 60000) {
+                else if (timeDifferenceLastWatered > 60000) {
                     amountToDecrease = 60;
                 }
-                if (timeDifferenceLastWatered > 70000) {
+                else if (timeDifferenceLastWatered > 70000) {
                     amountToDecrease = 70;
                 }
-                if (timeDifferenceLastWatered > 80000) {
+                else if (timeDifferenceLastWatered > 80000) {
                     amountToDecrease = 80;
                 }
-                if (timeDifferenceLastWatered > 90000) {
+                else if (timeDifferenceLastWatered > 90000) {
                     amountToDecrease = 90;
                 }
-                if (timeDifferenceLastWatered > 100000) {
+                else if (timeDifferenceLastWatered > 100000) {
                     amountToDecrease = 100;
                 }
                 console.log(timeDifferenceLastWatered)
                 
                 dbRef.update({ points: this.state.points - amountToDecrease })                
-            
             }
             this.setState({
                 dateWatered: dateWatered,
                 dateClickedStart: dateClickedStart,
-                points: this.state.points - amountToDecrease
+                points: this.state.points - amountToDecrease,
+                firstWatered
             })
         })
     };
@@ -89,20 +94,43 @@ class PlantPage extends React.Component {
 
         const timeDifference = Date.now() - this.state.dateWatered
         // console.log(timeDifference);
-        let pointsChange = 10;
-        if (timeDifference > 10000) {
-            pointsChange = 10
-        } else {
-            pointsChange = -10
+        let pointsChange = 0;
+        if (this.state.firstWatered) {
+            pointsChange = 10;
+            dbRef.update({ firstWatered: false })
+            // console.log("In if: " +this.state.firstWatered)
+            console.log("In if2: " + this.state.firstWatered)
+            console.log("first if statement");
+        } 
+        else if(!this.state.firstWatered&&timeDifference<10000){
+            pointsChange=-10;
+          
+            // console.log("In if2: " + this.state.firstWatered)
+            // console.log("In if: " + firstWatered)
+            console.log("2nd if statement");
+          
         }
-
+        else if(!this.state.firstWatered&&timeDifference>10000){
+            pointsChange=10;
+         
+            // console.log("In if2: " + this.state.firstWatered)
+            console.log("In if: " + firstWatered)
+            console.log("third if statement");
+        }
+        else {
+            
+        }
         dbRef.update({ points: this.state.points + pointsChange })
         // dbRef.update({ points: this.state.points + 10 })
         dbRef.update({ dateWatered: Date.now() })
+        // dbRef.update({ firstWatered: false })
+        
         // if user clicks water me again before 10 seconds have passed, 
         // decrease points by 10
         this.setState({
-            points: this.state.points + pointsChange
+            points: this.state.points + pointsChange,
+            firstWatered: false
+            
         })
 
     }
@@ -111,7 +139,7 @@ class PlantPage extends React.Component {
         let show = null;
         if (this.state.points <= 0){
             show = <p>You lose!!</p>
-        } else if (this.state.points > 100) {
+        } else if (this.state.points >= 100) {
             show = <p>You win!!</p>
         } else {
             show = (

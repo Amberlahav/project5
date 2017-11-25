@@ -26,7 +26,7 @@ class Welcome extends React.Component {
 
         return (
             <form onSubmit={this.submitForm}>
-                <h1>Welcome to Virtual Plant!</h1>
+                <h1>Welcome to Plant Parenthood!</h1>
                 <h2>New user?</h2>
                 <label htmlFor="userName">Enter your name:</label>
                 <input type="text" onChange={this.handleChange} value={this.state.userName} name="userName" />

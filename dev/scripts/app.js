@@ -53,7 +53,8 @@ class App extends React.Component {
       plantName: user.plantName,
       points: 50,
       dateClickedStart: Date.now(),
-      dateWatered: Date.now()
+      dateWatered: Date.now(),
+      firstWatered: true
     }
     // console.log(usersItem);
     const dbRef = firebase.database().ref();
