@@ -71,13 +71,12 @@ class App extends React.Component {
   }
 
   startReturningUser(e) {
+    e.preventDefault();
     this.setState({
       key: e.target.id,
     })
     const dbRef = firebase.database().ref(e.target.id);
     dbRef.update({ dateClickedStart: Date.now() })
-
-  
 
       // if (timeDifferenceLastWatered > 10000) {
       //       dbRef.update({ points: this.state.points - 10 })
@@ -97,7 +96,7 @@ class App extends React.Component {
             }
           </ul>
           {this.state.key ?
-          <PlantPage userPoints={this.state.points} userKey={this.state.key}/>
+            <PlantPage userPoints={this.state.points} userKey={this.state.key} plantName={this.state.plantName} userName={this.state.userName}/>
             : null
           // instead of null, show list of plants (create new component)
           }

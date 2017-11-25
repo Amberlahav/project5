@@ -6,26 +6,28 @@ class PlantPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            userName: "",
+            plantName: "",
             points: 50,
             dateWatered: 0,
             dateClickedStart: 0,
             key: ''
         }
         this.changePoints = this.changePoints.bind(this);
+        this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     }
-    // componentWillReceiveProps(nextProps){
-    //   // console.log(nextProps);
-    //   this.setState({
-    //     points: nextProps.userPoints,
-    //     key: nextProps.userKey
-    //   })
+    componentWillReceiveProps(nextProps){
+    //   console.log(nextProps);
+      this.setState({
+        userName: nextProps.userName,
+        plantName: nextProps.plantName
+      })
 
-    // }
+    }
     componentDidMount() {
 
         const dbRef = firebase.database().ref(this.props.userKey);
-
-        // const lastWatered = dbRef.snapshot.val();
+     
         dbRef.on("value", (snapshot) => {
             let dateWatered = (snapshot.val().dateWatered);
             let dateClickedStart = (snapshot.val().dateClickedStart);
@@ -86,7 +88,7 @@ class PlantPage extends React.Component {
 
         const timeDifference = Date.now() - this.state.dateWatered
         // console.log(timeDifference);
-        let pointsChange = 0;
+        let pointsChange = 10;
         if (timeDifference > 10000) {
             pointsChange = 10
         } else {
@@ -118,22 +120,43 @@ class PlantPage extends React.Component {
                 </div>
             )
         }
+        let showImage = null;
+        if (this.state.points === 100) {
+            showImage = <img src="public/images/plantPlaceholder10.png" alt="placeholder image" />
+        } else if (this.state.points === 90) {
+            showImage = <img src="public/images/plantPlaceholder9.png" alt="placeholder image" />
+        } else if (this.state.points === 80) {
+            showImage = <img src="public/images/plantPlaceholder8.png" alt="placeholder image" />
+        } else if (this.state.points === 70) {
+            showImage = <img src="public/images/plantPlaceholder7.png" alt="placeholder image" />
+        } else if (this.state.points === 60) {
+            showImage = <img src="public/images/plantPlaceholder6.png" alt="placeholder image" />
+        } else if (this.state.points === 50) {
+            showImage = <img src="public/images/plantPlaceholder5.png" alt="placeholder image" />
+        } else if (this.state.points === 40) {
+            showImage = <img src="public/images/plantPlaceholder4.png" alt="placeholder image" />
+        } else if (this.state.points === 30) {
+            showImage = <img src="public/images/plantPlaceholder3.png" alt="placeholder image" />
+        } else if (this.state.points === 20) {
+            showImage = <img src="public/images/plantPlaceholder2.png" alt="placeholder image" />
+        } else if (this.state.points === 10) {
+            showImage = <img src="public/images/plantPlaceholder1.png" alt="placeholder image" />
+        } else if (this.state.points <= 0) {
+            showImage = <img src="public/images/plantPlaceholder0.png" alt="placeholder image" />
+        }
 
-       
+        console.log(this.state.userName + "blah")
 
         return (
             <section>
-                {/* <h3>Hello, {this.state.userName}, {this.state.plantName} is excited to see you!</h3> */}
-            <img src="public/images/plantPlaceholder5.png" alt="placeholder image" />
-                {/* <PlantImage /> */}
+            <h3>Hello, {`${this.state.userName}`}, {`${this.state.plantName}`} is excited to see you!</h3>
+            {showImage}
             {show}
+            
             </section>
         )
     }
 }
 
-// class PlantImage extends React.Component {
-
-// }
 
 export default PlantPage;
