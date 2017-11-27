@@ -19,9 +19,9 @@ class Welcome extends React.Component {
         e.preventDefault()
         this.props.submitForm(this.state)
     }
-    componentDidMount() {
+    // componentDidMount() {
 
-    }
+    // }
     render() {
 
         return (
@@ -31,10 +31,11 @@ class Welcome extends React.Component {
                 <h2>New user?</h2>
                 <label htmlFor="userName">Enter your name:</label>
                 <input type="text" onChange={this.handleChange} value={this.state.userName} name="userName" />
-
+  
+ 
                 <label htmlFor="plantName">Choose your plant's name:</label>
                 <input type="text" onChange={this.handleChange} value={this.state.plantName} name="plantName" />
-
+  
                 <button type="submit">GET PLANT</button>
                 
             </form>

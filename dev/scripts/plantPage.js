@@ -2,11 +2,10 @@ import React from 'react';
 
 
 let firstLoaded = true;
-// let firstWatered;
+
 class PlantPage extends React.Component {
     constructor(props) {
         super(props)
-        // let temp = (snapshot.val().points);
         this.state = {
             userName: "",
             plantName: "",
@@ -25,11 +24,11 @@ class PlantPage extends React.Component {
       this.setState({
         userName: nextProps.userName,
         plantName: nextProps.plantName,
-        // points: nextProps.points
+        
       })
 
     }
-
+// method that accesses the user's points from the database using their key, and stroring the value in a function with a return:
 getPoints(){
     let points=0;
     const dbRef = firebase.database().ref(this.props.userKey);
@@ -43,17 +42,16 @@ getPoints(){
     componentDidMount() {
 
         const dbRef = firebase.database().ref(this.props.userKey);
-     
+    //  getting all the information including time stamps, points and whether it was first watered from the database and storing in variables:
         dbRef.on("value", (snapshot) => {
             let dateWatered = (snapshot.val().dateWatered);
             let dateClickedStart = (snapshot.val().dateClickedStart);
             let points = (snapshot.val().points);
  
             let firstWatered = (snapshot.val().firstWatered);
-      
-
+        
             let amountToDecrease = 0;
-
+        // conditional statements that decrease the points depending on how much time passed between when the user last watered their plant and when they clicked start again:
             if (firstLoaded){
            
                 const timeDifferenceLastWatered = dateClickedStart - dateWatered
@@ -91,7 +89,7 @@ getPoints(){
                     amountToDecrease = 10;
                 }
             
-                
+            // updating the points in the database:
                 dbRef.update({ points: this.state.points - amountToDecrease })                
             }
             this.setState({
@@ -102,6 +100,7 @@ getPoints(){
             })
         })
     };
+    // method that either increases or decreases the user's points based on whether or not they water the plant within the given threshold of time: 
     changePoints() {
 
         const dbRef = firebase.database().ref(this.props.userKey);
@@ -109,33 +108,33 @@ getPoints(){
         const timeDifference = Date.now() - this.state.dateWatered
        
         let pointsChange = 0;
+        // firstWatered starts off as true automatically, until the user clicks the first time, then it gets set to false
+        // first time a user waters their plant when they first get it, points go up. if they water it again before 10 seconds have passed, points go down.
         if (this.state.firstWatered) {
             pointsChange = 10;
             dbRef.update({ firstWatered: false })
            
         } 
+        // when user clicks their plant again from the plant list and water it before 10 seconds have passed since the last time they watered it, points go down.
         else if(!this.state.firstWatered&&timeDifference<10000){
             pointsChange=-10;
           
-          
-          
+        
+        // if the user selects their plant from the plant list and water it after 10 seconds have passed, points go up.  
         }
         else if(!this.state.firstWatered&&timeDifference>10000){
             pointsChange=10;
          
             
-            
         }
         else {
             
         }
+        // updating the points and logging the time in the database and setting the state:
         dbRef.update({ points: this.state.points + pointsChange })
-        // dbRef.update({ points: this.state.points + 10 })
+       
         dbRef.update({ dateWatered: Date.now() })
-        // dbRef.update({ firstWatered: false })
         
-        // if user clicks water me again before 10 seconds have passed, 
-        // decrease points by 10
         this.setState({
             firstWatered: false,
             points: this.state.points + pointsChange
@@ -145,7 +144,7 @@ getPoints(){
 
     }
     render() {
-        
+        // conditional rendering based on if the user reached 0 or 100 points, and displaying specific sentences if they did, else display their points and the water me button:
         let show = null;
         if (this.state.points <= 0){
             show = <p className="points">Woah there.. looks like you're not be ready to take care of a plant right now. That's okay, you can always come back later and try again with a new plant.</p>
@@ -159,6 +158,7 @@ getPoints(){
                 </div>
             )
         }
+        // more conditional rendering that changes the image based on the amount of points:
         let showImage = null;
         if (this.state.points === 100) {
             showImage = <img src="public/images/plantImage10.svg" alt="placeholder image" />
