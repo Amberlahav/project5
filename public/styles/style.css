@@ -1,0 +1,280 @@
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
+  display: block; }
+
+audio, canvas, video {
+  display: inline-block; }
+
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+[hidden] {
+  display: none; }
+
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+a:focus {
+  outline: thin dotted; }
+
+a:active, a:hover {
+  outline: 0; }
+
+h1 {
+  font-size: 2em; }
+
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+b, strong {
+  font-weight: 700; }
+
+dfn {
+  font-style: italic; }
+
+mark {
+  background: #ff0;
+  color: #000; }
+
+code, kbd, pre, samp {
+  font-family: monospace, serif;
+  font-size: 1em; }
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word; }
+
+q {
+  quotes: \201C \201D \2018 \2019; }
+
+small {
+  font-size: 80%; }
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -.5em; }
+
+sub {
+  bottom: -.25em; }
+
+img {
+  border: 0; }
+
+svg:not(:root) {
+  overflow: hidden; }
+
+fieldset {
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: .35em .625em .75em; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0; }
+
+button, input {
+  line-height: normal; }
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+  -webkit-appearance: button;
+  cursor: pointer; }
+
+button[disabled], input[disabled] {
+  cursor: default; }
+
+input[type=checkbox], input[type=radio] {
+  box-sizing: border-box;
+  padding: 0; }
+
+input[type=search] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box; }
+
+input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+textarea {
+  overflow: auto;
+  vertical-align: top; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body, figure {
+  margin: 0; }
+
+legend, button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: '';
+  clear: both;
+  height: 0; }
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  background: white;
+  text-align: center; }
+
+p, label, button {
+  font-family: 'Muli', sans-serif;
+  font-size: 1.8rem; }
+
+h2 {
+  font-family: 'Muli', sans-serif;
+  font-size: 3rem;
+  color: #1a8a1a; }
+
+h3 {
+  font-family: 'Muli', sans-serif;
+  font-size: 2.8rem;
+  margin: 0 auto;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%); }
+
+header {
+  height: 40vh;
+  background: linear-gradient(rgba(97, 248, 241, 0.6), white), url(../images/leaves.png);
+  padding: 50px 0; }
+  header h1 {
+    padding: 30px;
+    font-family: 'Marmelad', sans-serif;
+    font-size: 6rem;
+    color: #1a8a1a;
+    border-radius: 5px;
+    background: white;
+    width: 65%;
+    margin: 20px auto; }
+  header button {
+    margin-top: 30px; }
+  header .instructions {
+    margin: 0; }
+
+img {
+  width: 100%; }
+
+.imageContainer {
+  width: 28%;
+  margin: 0 auto; }
+
+button {
+  border: 1px solid #206b20;
+  border-radius: none;
+  padding: 10px;
+  margin: 5px; }
+  button:hover {
+    background: #1a8a1a;
+    color: white; }
+
+.plantList {
+  margin-top: 40px; }
+  .plantList ul {
+    list-style: none;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 35%;
+    margin: 0 auto;
+    padding: 0; }
+
+html, body, .app {
+  margin: 0;
+  padding: 0;
+  position: relative; }
+
+.popup {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5); }
+  .popup p {
+    padding: 20px 20px 0px 20px;
+    line-height: 1.6; }
+  .popup button {
+    position: absolute;
+    bottom: -55px; }
+
+.popup_inner {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+  margin: auto;
+  background: white; }
+
+.welcome {
+  height: 20vh;
+  margin-top: 60px; }
+  .welcome input, .welcome button {
+    font-family: 'Muli', sans-serif;
+    font-size: 2rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #1a8a1a;
+    margin: 5px; }
+  .welcome label {
+    font-size: 2rem;
+    margin: 0 15px; }
+
+.plantPage {
+  background: url(../images/window4.png), linear-gradient(white, #61f8f1);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  position: relative; }
+  .plantPage section {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; }
+
+.waterMe, .points {
+  position: absolute;
+  top: 2%;
+  width: 50%;
+  left: 50%;
+  transform: translateX(-50%); }
+
+.waterMe button {
+  border-color: blue; }
+  .waterMe button:hover {
+    background: #00c3ff;
+    border-color: #00c3ff; }
+
+.points {
+  font-size: 2.4rem;
+  padding: 30px; }
