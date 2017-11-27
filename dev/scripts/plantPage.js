@@ -21,7 +21,7 @@ class PlantPage extends React.Component {
         this.getPoints = this.getPoints.bind(this);
     }
     componentWillReceiveProps(nextProps){
-    //   console.log(nextProps);
+
       this.setState({
         userName: nextProps.userName,
         plantName: nextProps.plantName,
@@ -36,6 +36,7 @@ getPoints(){
     dbRef.on("value", (snapshot) => {
          points = (snapshot.val().points);
     })
+    
     return points;
 }
 
@@ -47,9 +48,9 @@ getPoints(){
             let dateWatered = (snapshot.val().dateWatered);
             let dateClickedStart = (snapshot.val().dateClickedStart);
             let points = (snapshot.val().points);
-            console.log("ccurreent: "+points);
+ 
             let firstWatered = (snapshot.val().firstWatered);
-            console.log(firstWatered)
+      
 
             let amountToDecrease = 0;
 
@@ -89,7 +90,7 @@ getPoints(){
                 else if (timeDifferenceLastWatered > 10000) {
                     amountToDecrease = 10;
                 }
-                console.log(timeDifferenceLastWatered)
+            
                 
                 dbRef.update({ points: this.state.points - amountToDecrease })                
             }
@@ -106,29 +107,24 @@ getPoints(){
         const dbRef = firebase.database().ref(this.props.userKey);
 
         const timeDifference = Date.now() - this.state.dateWatered
-        // console.log(timeDifference);
+       
         let pointsChange = 0;
         if (this.state.firstWatered) {
             pointsChange = 10;
             dbRef.update({ firstWatered: false })
-            // console.log("In if: " +this.state.firstWatered)
-            console.log("In if2: " + this.state.firstWatered)
-            console.log("first if statement");
+           
         } 
         else if(!this.state.firstWatered&&timeDifference<10000){
             pointsChange=-10;
           
-            // console.log("In if2: " + this.state.firstWatered)
-            // console.log("In if: " + firstWatered)
-            console.log("2nd if statement");
+          
           
         }
         else if(!this.state.firstWatered&&timeDifference>10000){
             pointsChange=10;
          
-            // console.log("In if2: " + this.state.firstWatered)
-            console.log("In if: " + this.state.firstWatered)
-            console.log("third if statement");
+            
+            
         }
         else {
             
@@ -152,48 +148,46 @@ getPoints(){
         
         let show = null;
         if (this.state.points <= 0){
-            show = <p>You lose!!</p>
-        } else if (this.state.points >= 100) {
-            show = <p>You win!!</p>
+            show = <p className="points">Woah there.. looks like you're not be ready to take care of a plant right now. That's okay, you can always come back later and try again with a new plant.</p>
+        } else if (this.state.points === 100) {
+            show = <p className="points">Great job! You are now ready to be a plant parent!</p>
         } else {
             show = (
-                <div>
+                <div className="waterMe">
                     <button onClick={this.changePoints}>WATER ME!</button>
-                    <p>Points:{this.state.points}</p>
+                    <p className="points">Points:{this.state.points}</p>
                 </div>
             )
         }
         let showImage = null;
         if (this.state.points === 100) {
-            showImage = <img src="public/images/plantPlaceholder10.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage10.svg" alt="placeholder image" />
         } else if (this.state.points === 90) {
-            showImage = <img src="public/images/plantPlaceholder9.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage9.svg" alt="placeholder image" />
         } else if (this.state.points === 80) {
-            showImage = <img src="public/images/plantPlaceholder8.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage8.svg" alt="placeholder image" />
         } else if (this.state.points === 70) {
-            showImage = <img src="public/images/plantPlaceholder7.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage7.svg" alt="placeholder image" />
         } else if (this.state.points === 60) {
-            showImage = <img src="public/images/plantPlaceholder6.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage6.svg" alt="placeholder image" />
         } else if (this.state.points === 50) {
-            showImage = <img src="public/images/plantPlaceholder5.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage5.svg" alt="placeholder image" />
         } else if (this.state.points === 40) {
-            showImage = <img src="public/images/plantPlaceholder4.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage4.svg" alt="placeholder image" />
         } else if (this.state.points === 30) {
-            showImage = <img src="public/images/plantPlaceholder3.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage3.svg" alt="placeholder image" />
         } else if (this.state.points === 20) {
-            showImage = <img src="public/images/plantPlaceholder2.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage2.svg" alt="placeholder image" />
         } else if (this.state.points === 10) {
-            showImage = <img src="public/images/plantPlaceholder1.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage1.svg" alt="placeholder image" />
         } else if (this.state.points <= 0) {
-            showImage = <img src="public/images/plantPlaceholder0.png" alt="placeholder image" />
+            showImage = <img src="public/images/plantImage0.svg" alt="placeholder image" />
         }
 
         return (
             <section>
-
-            {showImage}
-            {show}
-            
+                {show}
+                <div className="imageContainer">{showImage}</div>
             </section>
         )
     }

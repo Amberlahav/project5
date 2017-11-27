@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Welcome from './welcome';
+import Welcome from './welcome.js';
 import PlantPage from './plantPage.js';
+import PlantList from './plantList.js'
+import Scroll from 'react-scroll'; 
 
 var config = {
   apiKey: "AIzaSyAnY0sZu5MdoXZq44UIAMUPXzEFdVlohpw",
@@ -23,17 +25,19 @@ class App extends React.Component {
       points: 50,
       dateWatered: 0,
       dateClickedStart: 0,
-      key: ''
+      key: '',
+      showPopup: false
     }
     this.addUser = this.addUser.bind(this);
     this.startReturningUser = this.startReturningUser.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
   }
   componentDidMount() {
     const dbRef = firebase.database().ref();
     
     dbRef.on("value", (snapshot) => {
       let plantList = Object.assign(snapshot.val());
-      // console.log(plantList)
+
       this.setState({
         plantList
       })
@@ -56,11 +60,11 @@ class App extends React.Component {
       dateWatered: Date.now(),
       firstWatered: true
     }
-    // console.log(usersItem);
+
     const dbRef = firebase.database().ref();
-    // console.trace(usersItem)
+ 
     const userKey = dbRef.push(usersItem).getKey();
-    // console.log(userKey);
+
     
     this.setState({
       userName: "",
@@ -84,7 +88,7 @@ class App extends React.Component {
       let plantName = (snapshot.val().plantName);
       let userName = (snapshot.val().userName);
       let points = (snapshot.val().points);
-      // console.log(plantName)
+      
 
       this.setState({
         plantName,
@@ -97,44 +101,66 @@ class App extends React.Component {
       //       dbRef.update({ points: this.state.points - 10 })
       //   } 
   }
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
 
   render() {
     const plantObject = this.state.plantList
       return (
-        <div>
-          <Welcome submitForm={this.addUser} />
-          {this.state.key ?
-            <div>
-              {this.state.userName && this.state.plantName ?
-              <h3>Welcome back {`${this.state.userName}`}! {`${this.state.plantName}`} is excited to see you!</h3>
-                : <h3>your plant is ready to be watered!</h3>}
-              <PlantPage userPoints={this.state.points} userKey={this.state.key} />
-            </div>
-            : <ul>
+          <div className="mainApp">
+            <header>
+              <h1>Plant Parenthood</h1>
+              <button onClick={this.togglePopup}><p className="instructions">Instructions</p></button>
+            </header>
+            {this.state.showPopup ?
+              <Popup className="popUp"
+                text='Begin by typing in your user name and choosing a name for your new plant. Click "GET PLANT" to start your plant growing journey. Your plant starts off with 50 points. Every time you water your plant, you will receive 10 points and your plant will grow! You must remember to water your plant once every 24 hours so your plant can grow and flourish. If you water your plant more than once before 24 hours have passed, you will lose 10 points for every click and your plant will start to decay. Also, if you forget to water your plant after 48 hours have passed, you will lose 10 points for each day that passes and your plant will start to decay. When your points reach zero, the game will end. When your points reach 100, your plant is fully grown and you are ready to be a plant parent! '
+                closePopup={this.togglePopup.bind(this)}
+              />
+              : null
+            }
+            {<Welcome className="welcome" submitForm={this.addUser} />}
+            
+            {this.state.key ?
+              <div className="plantPage">
+                {this.state.userName && this.state.plantName ?
+                <h3>Welcome back {`${this.state.userName}`}, {`${this.state.plantName}`} has been waiting to see you!</h3>
+                  : <h3>Your plant is ready to be watered!</h3>}
+                {<PlantPage userPoints={this.state.points} userKey={this.state.key} />}
+              </div>
+              : <section className="plantList">
               <h2>Returning User? Select your plant:</h2>
-              {Object.keys(this.state.plantList).map((plant) => {
-                return <PlantList plantkey={plant} startReturningUser={this.startReturningUser} plantInfo={plantObject[plant]} />;
-              })
-              }
-            </ul>
-          // instead of null, show list of plants (create new component)
-          }
+                <ul>
+                {Object.keys(this.state.plantList).map((plant) => {
+                  return <PlantList plantkey={plant} startReturningUser={this.startReturningUser} plantInfo={plantObject[plant]} />;
+                })}
+              </ul></section>
+            }
+
+            
+              
+            
+            </div>
+
+          // </div>
+      )
+    }
+  }
+
+class Popup extends React.Component  {
+  render() {
+    return (
+      <div className='popup'>
+        <div className='popup_inner'>
+          {<p>{this.props.text}</p>}
+          <button onClick={this.props.closePopup}>Close</button>
         </div>
-      )
-    }
+      </div>
+    );
   }
-
-class PlantList extends React.Component {
-    render(){
-      let userPlant = this.props.plantInfo
-      // console.log(userPlant)
-      return (
-        <li>
-          <button onClick={this.props.startReturningUser} id={this.props.plantkey}>{userPlant.plantName}</button>
-        </li>
-      )
-    }
-  }
-
+}
 
 ReactDOM.render(<App />, document.getElementById('app'));

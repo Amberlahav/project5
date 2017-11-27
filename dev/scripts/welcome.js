@@ -25,8 +25,9 @@ class Welcome extends React.Component {
     render() {
 
         return (
+            <section className="welcome"> 
             <form onSubmit={this.submitForm}>
-                <h1>Welcome to Plant Parenthood!</h1>
+                
                 <h2>New user?</h2>
                 <label htmlFor="userName">Enter your name:</label>
                 <input type="text" onChange={this.handleChange} value={this.state.userName} name="userName" />
@@ -37,6 +38,7 @@ class Welcome extends React.Component {
                 <button type="submit">GET PLANT</button>
                 
             </form>
+            </section>
         )
     }
 }

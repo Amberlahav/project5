@@ -1,0 +1,20 @@
+.welcome {
+    // height: 100vh;
+    // border:1px solid red;
+    height: 20vh;
+    margin-top: 60px;
+
+    input, button {
+        font-family: 'Muli', sans-serif;
+        font-size: 2rem;
+        padding: 10px;
+        border-radius:5px;
+        border: 1px solid rgb(26, 138, 26);
+        margin: 5px;
+    }
+    label {
+        font-size: 2rem;
+        margin: 0 15px;
+    }
+    
+}

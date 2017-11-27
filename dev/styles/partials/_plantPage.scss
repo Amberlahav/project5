@@ -1,0 +1,47 @@
+
+.plantPage {
+    background: url(../images/window4.png), linear-gradient(white, rgb(97, 248, 241));
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-position: center;
+    // border: 1px solid blue;
+    height: 100vh;
+    position: relative;
+    section {
+        // border: 1px solid black;
+        position:absolute;
+        bottom: 0px;
+        left:50%;
+        transform: translateX(-50%);
+        // height: 80vh;
+        // top: 0;
+        width: 100%;
+    }
+  
+}
+
+    .waterMe, .points {
+        position: absolute;
+        top:-10%;
+        //  transform: translateY(-50%);
+        width: 50%;
+        left:50%;
+        transform: translateX(-50%);
+        // width: 100%;
+    }
+
+    .waterMe button{
+        border-color: blue;
+        &:hover {
+        background: rgb(0, 195, 255);
+        border-color: rgb(0, 195, 255);
+        // color: black;
+        }
+    }
+
+    .points {
+        font-size: 2.4rem;
+        padding: 30px;
+    }
+
+    
