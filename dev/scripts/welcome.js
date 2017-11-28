@@ -25,19 +25,24 @@ class Welcome extends React.Component {
     render() {
 
         return (
-            <section className="welcome"> 
-            <form onSubmit={this.submitForm}>
-                
-                <h2>New user?</h2>
-                <label htmlFor="userName">Enter your name:</label>
-                <input type="text" onChange={this.handleChange} value={this.state.userName} name="userName" />
-  
+            <section className="welcome wrapper"> 
  
-                <label htmlFor="plantName">Choose your plant's name:</label>
-                <input type="text" onChange={this.handleChange} value={this.state.plantName} name="plantName" />
-  
-                <button type="submit">GET PLANT</button>
-                
+            <form onSubmit={this.submitForm} className="clearfix">
+                    <h2>New user?</h2>
+                <div className="inputs clearfix">
+                    <div className="userName">
+                        <label htmlFor="userName">Enter your name:</label>
+                        <input type="text" onChange={this.handleChange} value={this.state.userName} name="userName" />
+                    </div>
+
+                    <div className="plantName">
+                        <label htmlFor="plantName">Choose your plant's name:</label>
+                        <input type="text" onChange={this.handleChange} value={this.state.plantName} name="plantName" />
+                    </div>
+              
+                <button className="submit" type="submit">GET PLANT</button>
+                </div>
+               
             </form>
             </section>
         )

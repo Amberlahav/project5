@@ -12,19 +12,21 @@ body {
 p, label, button {
     font-family: 'Muli', sans-serif;
     font-size: 1.8rem;
+    
 }
 
 h2 {
     font-family: 'Muli', sans-serif;
-    font-size: 3rem;
+    font-size: 2rem;
     color: rgb(26, 138, 26);
+    margin-bottom: 20px;
 }
 
 h3 {
     font-family: 'Muli', sans-serif;
-    font-size: 2.6rem;
+    font-size: 2rem;
     margin: 0 auto;
-    // margin-top:350px;
+    
     position: absolute;
     top:50px;
     left:50%;
@@ -42,9 +44,9 @@ header {
         font-size: 6rem;
         color: rgb(26, 138, 26);  
         border-radius: 5px;
-        background: white;
+        background: rgba(255,255,255,0.8);
         width: 65%;
-        margin: 20px auto;
+        margin: 0px auto;
 
     }
     button {
@@ -53,15 +55,13 @@ header {
     
     .instructions {
         margin: 0;
+        font-size: 1.4rem;
     }
 }
 img {
     width: 100%;
 }
-.imageContainer {
-    width: 28%;
-    margin: 0 auto;
-}
+
 
 button {
     border: 1px solid rgb(32, 107, 32);
@@ -76,14 +76,14 @@ button {
 
 .plantList {
     // height: 50vh;
-    margin-top: 40px;
+    // margin-top: 20px;
     ul {
         list-style: none;
         display: flex;
         align-content: center;
         justify-content: center;
         flex-wrap: wrap;
-        width: 35%;
+        width: 65%;
         margin: 0 auto;
         padding: 0;
     }
@@ -108,33 +108,115 @@ html, body, .app {
   bottom: 0;
   margin: auto;
   p {
-      padding: 20px 20px 0px 20px;
+      padding: 50px;
       line-height: 1.8;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
   }
-  button {
-      position: absolute;
-      bottom: -55px;
-  }
+//  
   background-color: rgba(0,0,0, 0.5);
 }
 .popup_inner {
   position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
+  left: 10%;
+  right: 10%;
+  top: 20%;
+  bottom: 20%;
   margin: auto;
   background: white;
 }
 
+.wrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+
+@media (max-width:840px) {
+        header {
+            height: 20vh;
+            h1 {
+                font-size: 5.4rem;
+            }
+        
+        button {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            padding: 5px;
+        }
+    }
+      .popup_inner {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 15%;
+        bottom: 15%;
+   
+        }
+    }
+  
+@media (max-width:765px) {
+    header {
+        h1{
+        font-size: 4.8rem;
+        width: 75%;
+        }
+    }
+    .popup p {
+        font-size: 1.4rem;
+        // line-height: 1.5;
+    }
+}
+
+@media (max-width:730px) {
+    .plantList {
+        margin-top: 130px;
+    }
+    p, label, button {
+        font-size:1.4rem;
+    }
+    .popup_inner {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 5%;
+        bottom: 5%;
+
+        }
+    .popup button {
+        position: absolute;
+        bottom: -10px;
+    }
+    
+    }
 
 
-// .welcome {
-//     background: lightpink;
-//     height: 50vh;
-// }
+@media (max-width:600px) {
+        header {
+            height: 15vh;
+            h1 {
+                font-size: 5rem;
+                width: 85%;
+            }
+        
+        button {
+            font-size: 1.2rem;
+            margin-top: 5px;
+            padding: 5px;
+        }
+    }
+    .plantList {
+        margin-top: 140px;
+    }
+    p, label, button {
+        font-size:1.2rem;
+    }
+    .popup p {
+       font-size:1.3rem;
+        }
+    }
 
-// .plantList {
-//     background: grey;
-// }
+@media (max-width:470px) {
+    .popup p {
+        font-size: 1.2rem;
+    }
+
+}

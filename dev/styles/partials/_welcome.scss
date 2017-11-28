@@ -2,20 +2,109 @@
 .welcome {
     // height: 100vh;
     // border:1px solid red;
-    height: 20vh;
+    height: 25vh;
     margin-top: 60px;
+   
 
+    form {
+        width: 85%;
+        // padding: 0 20px;
+        // border: 1px solid blue;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+    .plantName, .userName {
+        width: 40%;
+    }
+     .submit {
+            // clear: both;
+
+            width: 150px;
+            margin-top: 25px;
+            font-size: 1.4rem;
+        }
+    .inputs {
+        display: flex;
+       justify-content: space-between;
+        
+    }
     input, button {
         font-family: 'Muli', sans-serif;
-        font-size: 1.8rem;
-        padding: 10px;
+        font-size: 1.6rem;
+        padding: 5px;
         border-radius:5px;
         border: 1px solid rgb(26, 138, 26);
         margin: 5px;
+        width: 85%;
     }
     label {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         margin: 0 15px;
     }
+
+    @media (max-width:890px) {
+        form {
+            width:95%;
+        }
+    }
+    @media (max-width:840px) {
+        margin-top: 160px;
+    }
+
+
+    @media (max-width:795px) {
+        form {
+            width:100%;
+            // border: 1px solid blue;
+        }
+        .submit {
+            width: 150px;
+        }
+        input {
+            width: 70%;
+        }
+        .plantName, .userName {
+        width: 50%;
+        }
+    }
+
+    @media (max-width:728px) {
+        margin-top: 140px;
+        .inputs {
+            width:100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            // border: 1px solid blue;
+        }
+        .plantName, .userName {
+        width: 50%;
+        margin: 10px auto;
+        }
+        .submit {
+            margin: 0 auto;
+            width: 20%;
+        }
+    }
     
+    @media (max-width:600px) {
+        margin-top: 200px;
+        .inputs {
+            width:100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            // border: 1px solid blue;
+        }
+        .plantName, .userName {
+        width: 70%;
+        margin: 10px auto;
+        }
+        .submit {
+            margin: 0 auto;
+            width: 40%;
+        }
+    }
 }

@@ -147,9 +147,9 @@ getPoints(){
         // conditional rendering based on if the user reached 0 or 100 points, and displaying specific sentences if they did, else display their points and the water me button:
         let show = null;
         if (this.state.points <= 0){
-            show = <p className="points">Woah there.. looks like you're not be ready to take care of a plant right now. That's okay, you can always come back later and try again with a new plant.</p>
+            show = <p className="message">Woah there.. looks like you're not be ready to take care of a plant right now. That's okay, you can always come back later and try again with a new plant.</p>
         } else if (this.state.points === 100) {
-            show = <p className="points">Great job! You are now ready to be a plant parent!</p>
+            show = <p className="message">Great job! You are now ready to be a plant parent!</p>
         } else {
             show = (
                 <div className="waterMe">

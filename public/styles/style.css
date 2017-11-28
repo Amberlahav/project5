@@ -144,12 +144,13 @@ p, label, button {
 
 h2 {
   font-family: 'Muli', sans-serif;
-  font-size: 3rem;
-  color: #1a8a1a; }
+  font-size: 2rem;
+  color: #1a8a1a;
+  margin-bottom: 20px; }
 
 h3 {
   font-family: 'Muli', sans-serif;
-  font-size: 2.6rem;
+  font-size: 2rem;
   margin: 0 auto;
   position: absolute;
   top: 50px;
@@ -166,20 +167,17 @@ header {
     font-size: 6rem;
     color: #1a8a1a;
     border-radius: 5px;
-    background: white;
+    background: rgba(255, 255, 255, 0.8);
     width: 65%;
-    margin: 20px auto; }
+    margin: 0px auto; }
   header button {
     margin-top: 30px; }
   header .instructions {
-    margin: 0; }
+    margin: 0;
+    font-size: 1.4rem; }
 
 img {
   width: 100%; }
-
-.imageContainer {
-  width: 28%;
-  margin: 0 auto; }
 
 button {
   border: 1px solid #206b20;
@@ -190,17 +188,15 @@ button {
     background: #1a8a1a;
     color: white; }
 
-.plantList {
-  margin-top: 40px; }
-  .plantList ul {
-    list-style: none;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 35%;
-    margin: 0 auto;
-    padding: 0; }
+.plantList ul {
+  list-style: none;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 65%;
+  margin: 0 auto;
+  padding: 0; }
 
 html, body, .app {
   margin: 0;
@@ -219,35 +215,154 @@ html, body, .app {
   margin: auto;
   background-color: rgba(0, 0, 0, 0.5); }
   .popup p {
-    padding: 20px 20px 0px 20px;
+    padding: 50px;
     line-height: 1.8;
-    font-size: 1.6rem; }
-  .popup button {
-    position: absolute;
-    bottom: -55px; }
+    font-size: 1.5rem; }
 
 .popup_inner {
   position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
+  left: 10%;
+  right: 10%;
+  top: 20%;
+  bottom: 20%;
   margin: auto;
   background: white; }
 
+.wrapper {
+  width: 80%;
+  margin: 0 auto; }
+
+@media (max-width: 840px) {
+  header {
+    height: 20vh; }
+    header h1 {
+      font-size: 5.4rem; }
+    header button {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      padding: 5px; }
+  .popup_inner {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 15%;
+    bottom: 15%; } }
+
+@media (max-width: 765px) {
+  header h1 {
+    font-size: 4.8rem;
+    width: 75%; }
+  .popup p {
+    font-size: 1.4rem; } }
+
+@media (max-width: 730px) {
+  .plantList {
+    margin-top: 130px; }
+  p, label, button {
+    font-size: 1.4rem; }
+  .popup_inner {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 5%;
+    bottom: 5%; }
+  .popup button {
+    position: absolute;
+    bottom: -10px; } }
+
+@media (max-width: 600px) {
+  header {
+    height: 15vh; }
+    header h1 {
+      font-size: 5rem;
+      width: 85%; }
+    header button {
+      font-size: 1.2rem;
+      margin-top: 5px;
+      padding: 5px; }
+  .plantList {
+    margin-top: 140px; }
+  p, label, button {
+    font-size: 1.2rem; }
+  .popup p {
+    font-size: 1.3rem; } }
+
+@media (max-width: 470px) {
+  .popup p {
+    font-size: 1.2rem; } }
+
 .welcome {
-  height: 20vh;
+  height: 25vh;
   margin-top: 60px; }
+  .welcome form {
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 40px; }
+  .welcome .plantName, .welcome .userName {
+    width: 40%; }
+  .welcome .submit {
+    width: 150px;
+    margin-top: 25px;
+    font-size: 1.4rem; }
+  .welcome .inputs {
+    display: flex;
+    justify-content: space-between; }
   .welcome input, .welcome button {
     font-family: 'Muli', sans-serif;
-    font-size: 1.8rem;
-    padding: 10px;
+    font-size: 1.6rem;
+    padding: 5px;
     border-radius: 5px;
     border: 1px solid #1a8a1a;
-    margin: 5px; }
+    margin: 5px;
+    width: 85%; }
   .welcome label {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 0 15px; }
+  @media (max-width: 890px) {
+    .welcome form {
+      width: 95%; } }
+  @media (max-width: 840px) {
+    .welcome {
+      margin-top: 160px; } }
+  @media (max-width: 795px) {
+    .welcome form {
+      width: 100%; }
+    .welcome .submit {
+      width: 150px; }
+    .welcome input {
+      width: 70%; }
+    .welcome .plantName, .welcome .userName {
+      width: 50%; } }
+  @media (max-width: 728px) {
+    .welcome {
+      margin-top: 140px; }
+      .welcome .inputs {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-content: center; }
+      .welcome .plantName, .welcome .userName {
+        width: 50%;
+        margin: 10px auto; }
+      .welcome .submit {
+        margin: 0 auto;
+        width: 20%; } }
+  @media (max-width: 600px) {
+    .welcome {
+      margin-top: 200px; }
+      .welcome .inputs {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-content: center; }
+      .welcome .plantName, .welcome .userName {
+        width: 70%;
+        margin: 10px auto; }
+      .welcome .submit {
+        margin: 0 auto;
+        width: 40%; } }
 
 .plantPage {
   background: url(../images/window4.png), linear-gradient(white, #61f8f1);
@@ -263,20 +378,57 @@ html, body, .app {
     transform: translateX(-50%);
     width: 100%; }
 
-.waterMe, .points {
-  position: absolute;
-  top: 2%;
+.imageContainer {
+  width: 28%;
+  margin: 0 auto; }
+
+.waterMe {
   width: 50%;
   left: 50%;
-  transform: translateX(-50%); }
+  transform: translateX(-50%);
+  position: relative;
+  top: 60px; }
+
+.message {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 80px;
+  width: 50%; }
 
 .waterMe button {
-  border-color: blue; }
+  border-color: blue;
+  font-size: 1.6rem; }
   .waterMe button:hover {
     background: #00c3ff;
     border-color: #00c3ff; }
 
 .points {
   font-size: 2.2rem;
-  padding: 30px; }
+  padding: 0px;
+  width: 50%;
+  margin: 0 auto; }
 
+@media (max-width: 1040px) {
+  .imageContainer {
+    width: 35%; } }
+
+@media (max-width: 900px) {
+  .imageContainer {
+    width: 40%; } }
+
+@media (max-width: 840px) {
+  .imageContainer {
+    width: 45%; } }
+
+@media (max-width: 700px) {
+  .imageContainer {
+    width: 50%; } }
+
+@media (max-width: 600px) {
+  .imageContainer {
+    width: 55%; } }
+
+@media (max-width: 470px) {
+  .imageContainer {
+    width: 65%; } }
